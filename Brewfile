@@ -1,6 +1,4 @@
 # Taps
-tap 'homebrew/cask-fonts'
-tap 'homebrew/cask-versions'
 tap 'homebrew/bundle'
 
 # Binaries
@@ -19,7 +17,7 @@ cask 'clion'
 cask 'discord'
 cask 'firefox'
 cask 'goland'
-casl 'google-chrome'
+cask 'google-chrome'
 cask 'pycharm'
 cask 'spotify'
 cask 'zoom'
