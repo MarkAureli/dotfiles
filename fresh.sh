@@ -29,9 +29,6 @@ brew bundle --file ./Brewfile
 # Create a projects directories
 mkdir $HOME/Code
 
-# Clone Github repositories
-./clone.sh
-
 # Symlink the Mackup config file to the home directory
 ln -s ./.mackup.cfg $HOME/.mackup.cfg
 
