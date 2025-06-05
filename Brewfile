@@ -12,12 +12,10 @@ brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
 brew 'pyenv-virtualenv' # virtual environment manager for python
 
 # Apps
-cask 'basictex'
 cask 'clion'
 cask 'discord'
 cask 'firefox'
-cask 'goland'
-cask 'google-chrome'
+cask 'mactex'
 cask 'pycharm'
 cask 'spotify'
 cask 'zoom'
