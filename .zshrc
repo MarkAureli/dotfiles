@@ -109,59 +109,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export "PATH=$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-stouch () {
-    filename="$1"
-    reduced_filename=$(basename -- "$filename")
-    if [[ "$filename" != "$reduced_filename" ]]; then
-        echo "Scripts may only created in the current working directory."
-        return
-    fi
-    filename_without_extension="${filename%.*}"
-    file_extension="${filename##*.}"
-    case "$file_extension" in
-        "c")
-            echo "//usr/bin/clang \"\$0\" -o tmpexec && ./tmpexec \"\$@\"; exit" > "$filename"
-            ;;
-        "py")
-            echo "#!/opt/homebrew/bin/python3" > "$filename"
-            ;;
-        *)
-            echo "Unsupported file extension: $file_extension"
-            return
-            ;;
-    esac
-    if alias "$filename_without_extension" >/dev/null 2>&1; then 
-        echo "Alias \"$filename_without_extension\" is already in use and cannot be reassigned."
-    else 
-        alias "$filename_without_extension"="./$filename"
-    fi
-    chmod +x "$filename"
-}
-
-srm () {
-    filename="$1"
-    reduced_filename=$(basename -- "$filename")
-    if [[ "$filename" != "$reduced_filename" ]]; then
-        echo "Only scripts in the current working directory may be deleted."
-        return
-    fi
-    filename_without_extension="${filename%.*}"
-    file_extension="${filename##*.}"
-    case "$file_extension" in
-        "c")
-            ;;
-        "py")
-            ;;
-        *)
-            echo "Unsupported file extension: $file_extension"
-            return
-            ;;
-    esac
-    rm "$filename" 2>/dev/null
-    if [[ $? -eq 0 ]]; then
-        unalias "$filename_without_extension" 2>/dev/null
-    else
-        echo "$filename_without_extension doesn't exist."
-    fi
-}
-
+# flex and bison from homebrew
+export PATH="/opt/homebrew/opt/bison:$PATH"
+export PATH="/opt/homebrew/opt/flex:$PATH"
+export BISON_PKGDATADIR=$(brew --prefix bison)/share/bison
+export PATH="/opt/homebrew/opt/m4:$PATH"
