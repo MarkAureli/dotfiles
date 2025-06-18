@@ -114,3 +114,12 @@ export PATH="/opt/homebrew/opt/bison:$PATH"
 export PATH="/opt/homebrew/opt/flex:$PATH"
 export BISON_PKGDATADIR=$(brew --prefix bison)/share/bison
 export PATH="/opt/homebrew/opt/m4:$PATH"
+
+command_not_found_handler() {
+    if [[ -x "./$1" ]]; then
+        ./"$@"
+    else
+        echo "zsh: command not found: $1"
+        return 127
+    fi
+}
