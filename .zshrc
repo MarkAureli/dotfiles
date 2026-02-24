@@ -1,11 +1,11 @@
-# Path to your dotfiles.
+# Path to dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
+# Path to oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+
+# Include local binaries
+export PATH="$HOME/.local/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -28,7 +28,7 @@ ZSH_THEME="apple"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -77,10 +77,6 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
 # You may need to manually set your language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -107,13 +103,12 @@ export LANG=en_US.UTF-8
 # Set up shell environment for pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export "PATH=$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
-# flex and bison from homebrew
-export PATH="/opt/homebrew/opt/bison:$PATH"
-export PATH="/opt/homebrew/opt/flex:$PATH"
-export BISON_PKGDATADIR=$(brew --prefix bison)/share/bison
-export PATH="/opt/homebrew/opt/m4:$PATH"
+# Set up direnv
+eval "$(direnv hook zsh)"
 
 command_not_found_handler() {
     if [[ -x "./$1" ]]; then
