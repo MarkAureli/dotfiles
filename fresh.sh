@@ -9,15 +9,21 @@ fi
 
 # Check for Homebrew and install if we don't have it
 if test ! $(which brew); then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
+# Removes .zsh{env, rc} from $HOME (if it exists) and symlinks the .zsh{env, rc} file from the .dotfiles
 rm -rf $HOME/.zshrc
 ln -s .dotfiles/.zshrc $HOME/.zshrc
+rm -rf $HOME/.zshenv
+ln -s .dotfiles/.zshenv $HOME/.zshenv
+
+# Removes .gitignore_global from $HOME (if it exists) and symlinks the .gitignore_global file from .dotfiles
+rm -rf $HOME/.gitignore_global
+ln -s .dotfiles/.gitignore_global $HOME/.gitignore_global
 
 # Update Homebrew recipes
 brew update
@@ -26,11 +32,12 @@ brew update
 brew tap homebrew/bundle
 brew bundle --file ./Brewfile
 
-# Create a projects directories
+# Creates Code directory
 mkdir $HOME/Code
 
-# Symlink the Mackup config file to the home directory
-ln -s ./.mackup.cfg $HOME/.mackup.cfg
+# Symlinks the Mackup config file to the home directory
+rm -rf $HOME/.mackup.cfg
+ln -s .dotfiles/.mackup.cfg $HOME/.mackup.cfg
 
 # Set macOS preferences - we will run this last because this will reload the shell
 source ./.macos
