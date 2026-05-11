@@ -81,5 +81,9 @@ command_not_found_handler() {
     fi
 }
 
+# Local binary paths
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+# Restrict completion 
+zstyle ':completion:*:*:(nano|vim):*' ignored-patterns '*.pdf'
