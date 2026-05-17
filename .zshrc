@@ -72,14 +72,10 @@ eval "$(pyenv virtualenv-init -)"
 # Set up direnv
 eval "$(direnv hook zsh)"
 
-command_not_found_handler() {
-    if [[ -x "./$1" ]]; then
-        ./"$@"
-    else
-        echo "zsh: command not found: $1"
-        return 127
-    fi
-}
+# Autoload custom functions
+for fn in "$DOTFILES"/functions/*(.N); do
+  autoload -Uz "${fn:t}"
+done
 
 # Local binary paths
 export PATH="$HOME/go/bin:$PATH"
