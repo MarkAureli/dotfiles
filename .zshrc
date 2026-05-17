@@ -87,3 +87,20 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Restrict completion 
 zstyle ':completion:*:*:(less|nano|nvim|vim):*' ignored-patterns '*.pdf'
+
+export DEFAULT_BROWSER_BUNDLE_ID="$(
+  plutil -extract LSHandlers json -o - \
+    "$HOME/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist" 2>/dev/null |
+  jq -r '
+    [.[] | select(.LSHandlerURLScheme == "https" or .LSHandlerURLScheme == "http")
+          | .LSHandlerRoleAll // .LSHandlerRoleViewer]
+    | map(select(. != null))
+    | last // empty
+  '
+)"
+
+export DEFAULT_BROWSER_NAME="$(
+  mdls -name kMDItemDisplayName -raw \
+    "$(mdfind "kMDItemCFBundleIdentifier == '$DEFAULT_BROWSER_BUNDLE_ID'" | head -n 1)" \
+    2>/dev/null
+)"

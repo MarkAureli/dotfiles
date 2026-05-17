@@ -3,6 +3,7 @@ alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
 alias reloadshell="omz reload"
 alias ll="/opt/homebrew/opt/coreutils/libexec/gnubin/ls -AhlFo --color --group-directories-first"
 alias settings="open -a Settings"
+alias browse="open -a $DEFAULT_BROWSER_NAME"
 
 # Directories
 alias desktop="cd $HOME/Desktop"
