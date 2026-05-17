@@ -86,4 +86,4 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Restrict completion 
-zstyle ':completion:*:*:(nano|vim):*' ignored-patterns '*.pdf'
+zstyle ':completion:*:*:(less|nano|nvim|vim):*' ignored-patterns '*.pdf'
