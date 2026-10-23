@@ -3,6 +3,7 @@ alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
 alias reloadshell="omz reload"
 alias ll="/opt/homebrew/opt/coreutils/libexec/gnubin/ls -AhlFo --color --group-directories-first"
 alias settings="/usr/bin/open -a Settings"
+alias msupdate='"/Library/Application Support/Microsoft/MAU2.0/Microsoft AutoUpdate.app/Contents/MacOS/msupdate"'
 
 # Directories
 alias desktop="cd $HOME/Desktop"
