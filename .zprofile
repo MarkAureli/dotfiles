@@ -17,3 +17,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 typeset -U path  # drop duplicate entries
 
+
+# Default editor
+export EDITOR=nvim
+export VISUAL=nvim
