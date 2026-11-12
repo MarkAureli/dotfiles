@@ -35,9 +35,6 @@ brew bundle --file ./Brewfile
 # Creates Code directory
 mkdir $HOME/Code
 
-# Symlinks the Mackup config file to the home directory
-rm -rf $HOME/.mackup.cfg
-ln -s .dotfiles/.mackup.cfg $HOME/.mackup.cfg
 
 # Set macOS preferences - we will run this last because this will reload the shell
 source ./.macos

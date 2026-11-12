@@ -10,7 +10,6 @@ brew 'gh' # GitHub
 brew 'git'
 brew 'git-lfs'
 brew 'grep'
-brew 'mackup'
 brew 'mas' # Mac App Store manager
 brew 'mdv' markdown reader
 brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
