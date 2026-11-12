@@ -20,7 +20,7 @@ ZSH_THEME="apple"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode disabled  # updated at login by com.lennartbinkowski.omz-update LaunchAgent
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -48,6 +48,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 HIST_STAMPS="dd/mm/yyyy"
 
 ZSH_CUSTOM=$DOTFILES
+ZSH_DISABLE_COMPFIX=true
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
@@ -62,12 +63,14 @@ export LANG=en_GB.UTF-8
 #   export EDITOR='mvim'
 # fi
 
-# Set up shell environment for pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export "PATH=$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# pyenv (PYENV_ROOT and shims on PATH are set in .zprofile)
+# Lazy-load pyenv shell integration on first `pyenv` call
+pyenv() {
+  unfunction pyenv
+  eval "$(command pyenv init - zsh)"
+  eval "$(command pyenv virtualenv-init -)"
+  pyenv "$@"
+}
 
 # Set up direnv
 eval "$(direnv hook zsh)"
@@ -77,26 +80,9 @@ for fn in "$DOTFILES"/functions/*(.N); do
   autoload -Uz "${fn:t}"
 done
 
-# Local binary paths
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
 # Restrict completion 
 zstyle ':completion:*:*:(less|nano|nvim|vim):*' ignored-patterns '*.pdf'
 
-export DEFAULT_BROWSER_BUNDLE_ID="$(
-  plutil -extract LSHandlers json -o - \
-    "$HOME/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist" 2>/dev/null |
-  jq -r '
-    [.[] | select(.LSHandlerURLScheme == "https" or .LSHandlerURLScheme == "http")
-          | .LSHandlerRoleAll // .LSHandlerRoleViewer]
-    | map(select(. != null))
-    | last // empty
-  '
-)"
+# bun completions
+[ -s "/Users/lennartbinkowski/.bun/_bun" ] && source "/Users/lennartbinkowski/.bun/_bun"
 
-export DEFAULT_BROWSER_NAME="$(
-  mdls -name kMDItemDisplayName -raw \
-    "$(mdfind "kMDItemCFBundleIdentifier == '$DEFAULT_BROWSER_BUNDLE_ID'" | head -n 1)" \
-    2>/dev/null
-)"
